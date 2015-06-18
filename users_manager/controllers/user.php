@@ -8,10 +8,21 @@ include_once('models/user_model.php');
 $user_model = new User_model();
 
 switch ($action) {
-	case 'login':
-		break;
+	case 'edit':
+		$user_id = isset($_GET['id']) ? $_GET['id'] : false;
 
-	case 'logout':
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$data = $_POST;
+			$result = $user_model->save($data, $user_id);
+		}
+
+		$user = $user_model->getOne($user_id);
+		if ($user) {
+			$data['user'] = $user;
+		}
+
+		// Load view
+		include_once('views/user/edit.php');
 		break;
 
 	case 'list':

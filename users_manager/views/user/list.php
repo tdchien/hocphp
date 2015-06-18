@@ -17,10 +17,8 @@
             <td><?php echo $value['username']; ?></td>
             <td><?php echo $value['password']; ?></td>
             <td><?php echo $value['email']; ?></td>
-            <td>
-                <a href="index.php?page_layout=edituser&userid=<?php echo $value['userid']; ?>">Sửa</a>
-            </td>
-            <td><a href="deluser.php?userid=<?php echo $value['userid']; ?>">Xóa</a></td>
+            <td><a href="index.php?controller=user&action=edit&id=<?php echo $value['userid']; ?>">Sửa</a></td>
+            <td><a href="index.php?controller=user&action=delete&id=<?php echo $value['userid']; ?>">Xóa</a></td>
         </tr>
         <?php endforeach; ?>
     <?php else: ?>

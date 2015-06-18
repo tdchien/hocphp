@@ -22,26 +22,16 @@ class Database {
     }
 
     public function query($sql){
-        return mysql_query($sql, $this->conn);
+        $result = mysql_query($sql, $this->conn);
+        $data = array();
+        while ($item = mysql_fetch_array($result)) {
+            $data[] = $item;
+        }
+        return $data;
     }
 
-    public function free_query(){
-        if ($this->result) {
-            mysql_free_result($this->result);
-        }
-    }
-
-    public function numRows(){
-        if ($this->result) {
-            $rows = mysql_num_rows($this->result);
-            return $rows;
-        }
-    }
-
-    public function fetch(){
-        if ($this->result) {
-            $row = mysql_fetch_array($this->result);
-            return $row;
-        }
+    public function execute($sql){
+        $result = mysql_query($sql, $this->conn);
+        return $result;
     }
 }

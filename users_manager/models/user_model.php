@@ -23,14 +23,19 @@ class User_model {
         return $this->db->query('SELECT * FROM users');
     }
 
-    public function save($data, $id) {
+    public function saveOne($data, $id) {
         $sql = 'UPDATE users SET ';
         foreach ($data as $key => $value) {
             $sql .= "`{$key}` = '{$value}',";
         }
         $sql = trim($sql, ',');
         $sql .= " WHERE userid = $id";
-        $this->db->execute($sql);
+        return $this->db->execute($sql);
+    }
+
+    public function deleteOne($user_id) {
+        $data = $this->db->execute("DELETE FROM users WHERE userid = '$user_id'");
+        return (count($data) > 0) ? true : false;
     }
 
     public function login($username, $password){

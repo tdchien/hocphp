@@ -13,7 +13,12 @@ switch ($action) {
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$data = $_POST;
-			$result = $user_model->save($data, $user_id);
+			$result = $user_model->saveOne($data, $user_id);
+			if ($result !== false) {
+				$data['msg'] = 'Lưu dữ liệu thành công';
+			} else {
+				$data['err'] = 'Có lỗi xảy ra';
+			}
 		}
 
 		$user = $user_model->getOne($user_id);
@@ -23,6 +28,14 @@ switch ($action) {
 
 		// Load view
 		include_once('views/user/edit.php');
+		break;
+
+	case 'delete':
+		$user_id = isset($_GET['id']) ? $_GET['id'] : false;
+		if ($user_id) {
+			$result = $user_model->deleteOne($user_id);
+			if ($result) header('location: index.php?controller=user&action=list');
+		}
 		break;
 
 	case 'list':

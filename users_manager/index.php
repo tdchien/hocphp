@@ -12,6 +12,12 @@ $db = new Database();
 $controller = isset($_GET['controller']) ? $_GET['controller'] : false;
 $action = isset($_GET['action']) ? $_GET['action'] : false;
 
+// Check login
+if (!isset($_SESSION['username']) OR !isset($_SESSION['password'])) {
+	$controller = 'auth';
+	$action = 'login';
+}
+
 switch ($controller) {
 	case 'user':
 		include_once('controllers/user.php');

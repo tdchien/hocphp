@@ -1,31 +1,28 @@
 <?php
-class Database{
+class Database {
     protected $dbHost = 'localhost';
-    protected $dbName = 'users_manager';
-    protected $dbUser = 'root';
-    protected $dbPass = '';
-    protected $conn = NULL;
+    protected $dbName = 'hocphp';
+    protected $dbUser = 'hocphp';
+    protected $dbPass = 'hocphp';
+    public $conn = NULL;
     protected $result = NULL;
 
-    public function connect(){
+    public function __construct(){
         $this->conn = mysql_connect($this->dbHost, $this->dbUser, $this->dbPass);
         if ($this->conn) {
             $dbSelect = mysql_select_db($this->dbName, $this->conn);
                 if ($dbSelect) {
                     mysql_query("SET NAMES 'utf8'");
+                } else{
+                    die('Không tìm thấy cơ sở dữ liệu');
                 }
-                else{
-                    echo 'Không tìm thấy cơ sở dữ liệu';
-                }
-        }
-        else{
-            echo 'Không kết nối được tới CSDL';
+        } else{
+            die('Không kết nối được tới CSDL');
         }
     }
 
     public function query($sql){
-        $this->free_query();
-        $this->result = mysql_query($sql);
+        return mysql_query($sql, $this->conn);
     }
 
     public function free_query(){
@@ -48,7 +45,3 @@ class Database{
         }
     }
 }
-
-// $abc = new Database();
-// echo $abc->connect();
-?>

@@ -6,7 +6,8 @@ if (!isset($_SESSION['username']) && !isset($_SESSION['password'])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <meta charset="utf-8" />
+    <title>List user</title>
 </head>
 <body>
 <table align="center" border="2px">

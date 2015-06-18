@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8" />
     <title>User Login</title>
 </head>
 <body>
@@ -11,30 +12,27 @@ if (isset($_SESSION['username']) && isset($_SESSION['password'])) {
 }
 if (isset($_POST['submit'])) {
     if ($_POST['username'] == '') {
-        $error = 'Vui lòng nhập USerName và Password';
-    }
-    else{
+        $error = 'Vui lòng nhập username và password';
+    } else{
         $username = $_POST['username'];
     }
+
     if ($_POST['password'] == '') {
-        $error = 'Vui lòng nhập USerName và Password';
-    }
-    else{
+        $error = 'Vui lòng nhập username và password';
+    } else{
         $password = $_POST['password'];
     }
 
     if (isset($username) && isset($password)) {
-        $User = new User();
-        $User->set_username($username);
-        $User->set_password($password);
-        if ($User->login() == 'acc not vaid') {
-            $error = 'USerName hoặc Password Không hợp lệ';
-        }
-        else{
-            $User->login();
+        $user_model = new User_model();
+        $check_login = $user_model->login($username, $password);
+        if ($check_login) {
+            $_SESSION['username'] = $username;
+            $_SESSION['password'] = $password;
             header('location:index.php');
+        } else {
+            $error = 'username hoặc password Không hợp lệ';
         }
-
     }
 }
 ?>
